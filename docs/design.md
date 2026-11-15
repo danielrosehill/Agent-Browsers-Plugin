@@ -51,3 +51,13 @@ first-class on Ubuntu; likely a GNOME Shell extension or `gdbus` calls to `org.g
 - `browser-login` / `captcha-handoff` / `browser-status` — ported, viewer URL from config.
 - `deconflict-desktop` — install/check/remove the rule + the jump fix; `status` runs the poller test.
 - `take-over` — let the user type into the agent browser temporarily (if candidate 1 is chosen).
+
+## Owner requirements added 2026-11-15
+
+- **Local browser hygiene.** Agents tend to open a new browser per task and leave it open. The local-browser
+  skills must reuse an already-open agent browser instead of launching another one, and must close whatever
+  they opened (tabs, then the browser via `browser_close`) when the task is done, the way a test cleans up.
+- **Show on request, never by force.** The browser stays on the agent desktop. When there is something worth
+  seeing, the agent asks ("want to look at the preview?"); only on a yes does it switch the user's view to the
+  agent desktop (`workspace.backend` → KDE: `VirtualDesktopManager.current = <agent desktop id>`; GNOME and
+  wlroots equivalents behind the same seam), and it offers to switch back afterwards. Skill: `show-me`.
