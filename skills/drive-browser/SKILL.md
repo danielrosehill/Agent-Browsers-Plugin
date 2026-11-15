@@ -20,7 +20,11 @@ description: How to drive an agent browser through a Playwright-style MCP (navig
 2. Prefer the snapshot to screenshots. Take a screenshot only when the user wants to see something, or when layout matters.
 3. A local browser stays on the agent's desktop and never takes focus. **Don't switch the user's view yourself.** When
    there's something worth seeing, ask; on a yes, follow `show-me`.
-4. Login wall: check the browser's `login_source` (`registry.py get <id>`). `chrome-cookies`: the user signs in in
+4. **Through a gateway** (`mcp_route: "gateway"` in the registry, tools called via the gateway's toolbox): element
+   `ref`s and modal state (file choosers) usually don't survive between calls. Click by CSS selector (`browser_click`
+   `{"target": "#id"}`), read with `browser_evaluate`, or do a multi-step action in one `browser_run_code_unsafe` call.
+   Files to upload must exist on the browser's host, not this machine. See the entry's `ops_doc`.
+5. Login wall: check the browser's `login_source` (`registry.py get <id>`). `chrome-cookies`: the user signs in in
    their Chrome and the agent browser picks it up at its next launch. `manual-in-viewer`: give them the viewer URL and wait.
 
 ## When done (always, also on failure or a change of plan)

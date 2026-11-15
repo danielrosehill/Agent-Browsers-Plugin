@@ -9,3 +9,6 @@ House rules:
   `example.com` in docs.
 - Machine-facing output is JSON.
 - Release tier: small (`v0.<n>` until it works end to end, then `v1.0`, `v1.1`, …).
+
+Lineage (2026-11-15): successor to the owner's private `Agent-Browsers-Plugin` (retired that day). Per-user values
+and deployment notes stay out of this repo: they live in the user's `browsers.json` and in the `ops_doc` it points to.

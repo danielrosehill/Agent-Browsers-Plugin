@@ -22,6 +22,7 @@ A Claude Code plugin that gives Claude its own browsers and keeps them out of yo
 | `browser-login` | Hands a sign-in to you (never types credentials) by the browser's login source, identity provider first, then confirms the session |
 | `captcha-handoff` | Tries a challenge once, otherwise hands it to you and carries on; never abandons the task over a CAPTCHA |
 | `browser-status` | Checks each browser's MCP, viewer and a real tool call; fixes by symptom |
+| `install-viewers` | Desktop launchers that open remote (LAN/VPS) agent browsers as native windows over Xpra |
 | `deconflict-desktop` | Installs, checks, removes and tests the KDE window rule; `takeover` lets you type into the agent browser |
 
 ## Scripts (all print JSON)
@@ -33,10 +34,19 @@ A Claude Code plugin that gives Claude its own browsers and keeps them out of yo
 | `scripts/kde-browser-workspace.sh` | `install`, `status`, `remove`, `takeover on\|off`: the KWin rule (forced desktop, extreme focus-stealing prevention, never accepts focus) |
 | `scripts/kde-desktop-watch.sh N` | Watches for N seconds and reports any desktop switch, window creation and activation. This is the test for "did it jump?" |
 | `scripts/kde-panel-current-desktop.sh` | `status`, `on`, `off`: task manager "only current desktop" on every panel, applied live |
+| `scripts/xpra-viewers.sh` | `install`, `status`, `launch <id>`, `uninstall`: Xpra viewer launchers from `browsers.json` |
 | `scripts/local-browsers.sh` | Lists Playwright-managed browsers running on this machine, with age and owning MCP; `kill <pid>` for leftovers |
 | `test/launch-cycle.cjs` | Headed Playwright Firefox launch / navigate / new tab / close, twice, to test the rule without an MCP |
 
 Requirements: Linux, KDE Plasma 6 (`qdbus6`, `kwriteconfig6`, `kreadconfig6`) for the desktop parts, Python 3, a Playwright MCP server for each browser.
+
+## History
+
+- 2026-11-15: started as the public successor to a private, single-user agent-browser plugin. Its skills were
+  ported here with every host, account and port moved to `browsers.json` (`drive-*-browser` → `pick-browser` +
+  `drive-browser`; `local-browser-workspace` → `deconflict-desktop`; `install-local-viewers` → `install-viewers`;
+  `browser-login`, `captcha-handoff`, `browser-status` kept their names). Its deployment-specific notes moved to the
+  owner's own ops repo, and the private plugin was retired.
 
 ## License
 

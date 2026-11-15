@@ -24,7 +24,10 @@
       "mcp_server": "browser-personal",
       "addresses": { "lan": "192.0.2.10", "tailnet": "100.64.0.10" },
       "mcp_url": "http://{address}:8800/mcp",
-      "viewer_url": "http://{address}:8810",
+      "viewer_url": "tcp://{address}:14500",
+      "viewer": { "kind": "xpra", "launcher": "Personal Browser (Agent)", "title": "Personal", "color": "#2e7d32", "letter": "P",
+                  "password_command": "pass show agent-browser/viewer" },
+      "mcp_route": "direct",
       "login_source": { "kind": "manual-in-viewer" },
       "accounts": { "google": "you@example.com" },
       "ops_doc": "https://example.com/your-deployment-notes"
