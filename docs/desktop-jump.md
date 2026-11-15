@@ -42,7 +42,10 @@ KWin script logging `windowAdded`/`windowActivated` to the user journal; JSON ou
 `node test/launch-cycle.cjs ~/.npm/_npx/<hash>/node_modules/playwright-core` (the playwright-core inside
 `@playwright/mcp@0.0.85`).
 
-Rule state: `[agent-browser-workspace]` installed, `desktops` = the Claude desktop, `fsplevel=4` forced.
+Rule state: `[agent-browser-workspace]` installed, `desktops` = the Claude desktop, `fsplevel=4` forced, **and
+`acceptfocus=false` / `acceptfocusrule=2` (candidate 1)**. Found only afterwards (`~/.config/kwinrulesrc`, read
+2026-11-15 16:01): no script in any of the owner's repos writes those keys, so the morning session most likely
+added them by hand while testing, despite the handover's "none tested yet".
 
 | Trial | Fresh Firefox launches | Window landed on | `firefox-default` activations | Desktop changes |
 |---|---|---|---|---|
@@ -53,9 +56,10 @@ Rule state: `[agent-browser-workspace]` installed, `desktops` = the Claude deskt
 Confirmed: in these 5 launches the window was placed on Claude and never activated, and the user's focused window
 (Konsole) stayed active. Playwright does pass `-foreground` to headed Firefox
 (`playwright-core/lib/coreBundle.js`, `defaultArgs`), but with this rule it caused no activation here.
-Not explained: why the morning run jumped. Unconfirmed guesses: the rule was written but KWin had not
-reconfigured before that launch, or the browser launched while the user's focus was already moving. Keep the
-bug open until it either reproduces (then try the candidates above) or stays clean across several days of normal use.
+Most likely explanation (inferred, not yet A/B-tested): candidate 1 is what stopped the jump. To confirm, run the
+same trials with `scripts/kde-browser-workspace.sh takeover on` (acceptfocus true) and expect a jump, then
+`takeover off` and expect none. Since 2026-11-15, `install` writes candidate 1 and `takeover on|off` toggles it
+so the user can type into the agent browser. Keep the bug open until that A/B test is done.
 
 Side observation: every clipboard read by Claude Code (`wl-paste`) creates and activates a short-lived window
 for about 2 ms, then gives focus back to Konsole. Harmless, but the watcher logs it.

@@ -45,6 +45,10 @@ first-class on Ubuntu; likely a GNOME Shell extension or `gdbus` calls to `org.g
 
 ## Skills to end up with (planned)
 
+Built 2026-11-15: `setup`, `pick-browser`, `drive-browser`, `show-me`, `deconflict-desktop` (covers `take-over` via
+`kde-browser-workspace.sh takeover`). Still to port: `browser-login`, `captcha-handoff`, `browser-status`.
+
+
 - `setup` — write `browsers.json` interactively, create the agent desktop, install the window rule, verify with the poller.
 - `pick-browser` — choose a browser by task (local vs LAN vs VPS, login needed, egress), resolve the address.
 - `drive-browser` — generic driving notes (snapshot → ref → act, close when done).
