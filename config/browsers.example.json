@@ -1,0 +1,42 @@
+{
+  "$comment": "Copy to ~/.config/claude-agent-browsers/browsers.json and edit. Never commit the real file.",
+  "default": "personal-server",
+  "workspace": {
+    "desktop_name": "Claude",
+    "backend": "kde"
+  },
+  "browsers": [
+    {
+      "id": "local",
+      "type": "local",
+      "purpose": "Tasks on this machine you may want to watch: localhost, dev servers, public JS pages",
+      "engine": "playwright-firefox",
+      "mcp_server": "agent-browser",
+      "window_class": "firefox-default",
+      "isolated": true,
+      "login_source": { "kind": "chrome-cookies", "chrome_profile": "Default" }
+    },
+    {
+      "id": "personal-server",
+      "type": "lan",
+      "purpose": "Persistent logged-in profile that keeps running when the laptop sleeps",
+      "engine": "chrome-cdp",
+      "mcp_server": "browser-personal",
+      "addresses": { "lan": "192.0.2.10", "tailnet": "100.64.0.10" },
+      "mcp_url": "http://{address}:8800/mcp",
+      "viewer_url": "http://{address}:8810",
+      "login_source": { "kind": "manual-in-viewer" }
+    },
+    {
+      "id": "vps",
+      "type": "vps",
+      "purpose": "Non-home egress / always-on public tasks",
+      "engine": "chrome-cdp",
+      "mcp_server": "browser-vps",
+      "addresses": { "public": "vps.example.com", "tailnet": "100.64.0.20" },
+      "mcp_url": "http://{address}:8800/mcp",
+      "viewer_url": "http://{address}:8810",
+      "login_source": { "kind": "manual-in-viewer" }
+    }
+  ]
+}
