@@ -1,6 +1,6 @@
 # Claude Agent Browsers
 
-> **Work in progress.** See [`HANDOVER.md`](HANDOVER.md) for the plan and open problems.
+> **Work in progress.** See [`docs/design.md`](docs/design.md) for the plan and [`docs/desktop-jump.md`](docs/desktop-jump.md) for the open bug.
 
 A Claude Code plugin that gives Claude its own browsers and keeps them out of your way.
 

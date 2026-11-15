@@ -1,8 +1,6 @@
-# Handover: Claude-Agent-Browsers-Plugin (started 2026-11-15)
+# Design
 
-Written by the agent that started this repo, for the agent that finishes it. The owner started it from a Home
-Assistant session and wants this work done in its own session. Delete this file once its items are done and
-the README describes the plugin.
+Moved from the start-up handover on 2026-11-15.
 
 ## Goal
 
@@ -19,7 +17,7 @@ things together:
    runs in the background: it must **never** move the user's view, take focus or pop over their work. This is the
    point of the plugin. Claude in Chrome works but gets in the way on a laptop.
 
-## Where it comes from (private sources, do not copy personal values)
+## Sources (port patterns only, never personal values)
 
 - `danielrosehill/Agent-Browsers-Plugin` (private, local clone `../Agent-Browsers-Plugin`): the owner's current
   plugin. Skills `drive-personal-browser`, `drive-business-browser`, `browser-login`, `captcha-handoff`,
@@ -39,47 +37,13 @@ things together:
   desktop named Claude>` forced, `fsplevel=4` (extreme) forced, `types=1`. Make the class and desktop name
   come from `browsers.json` (`window_class`, `workspace.desktop_name`).
 
-## Open bug: the desktop still jumps (reproduced 2026-11-15, KDE Plasma 6, Wayland)
-
-With the rule above installed, the window **does** open on the Claude desktop. But KDE **switches the user's view
-to Claude** when the Playwright MCP starts a new Firefox. Evidence, from polling
-`qdbus6 org.kde.KWin /VirtualDesktopManager org.kde.KWin.VirtualDesktopManager.current` every 100 ms during a
-`browser_navigate` that launched a fresh browser:
-
-```
-15:43:01.908 <user desktop uuid>
-15:43:05.416 <Claude desktop uuid>     <- jump at window launch
-15:43:07.242 <user desktop uuid>       <- probably the user switching back by hand
-```
-
-So focus-stealing prevention "extreme" alone is not enough. Playwright starts Firefox with `-foreground`, and the
-browser asks to be activated. KWin activates the window and follows it to its desktop. An earlier check missed this:
-it read the current desktop only *after* launch. **Verify with the 100 ms poller, not a single read.**
-
-Candidates, none tested yet (the owner stopped the first attempt so it could move to this repo):
-1. KWin rule `acceptfocus=false` + `acceptfocusrule=2`: the window can never be activated, so there's nothing to
-   follow. Cost: the user can't type into it when taking over (the Playwright protocol doesn't need OS focus).
-   Maybe toggle it off with a "take over" skill.
-2. KWin rule `activity`/`minimizerule`, or the `kwinrc [Windows]` setting that controls what happens when a window
-   on another desktop is activated (Plasma 6 "when activating a window on a different virtual desktop"). Neither
-   of its options, switch or bring here, is what we want, so probably not.
-3. Stop the activation at the source: launch the Playwright browser without `-foreground` (custom executable
-   wrapper or launch options in the Playwright MCP config), or run it in a nested/headless compositor and view it
-   another way. `kde-agent-workspace` already has a headless-KWin "sandbox" mode on a private bus that may
-   solve this for free.
-4. A small KWin script (loaded persistently) that on `windowActivated` of class X on the agent desktop
-   switches `workspace.currentDesktop` straight back. Last resort; it would flicker.
-
-Done means: the poller shows **no** desktop change across launch, navigation, new tabs and `browser_close` +
-relaunch, and the user's focused window stays focused.
-
 ## Other Linux desktops
 
 KDE first, since the owner runs Plasma 6 on Wayland. Leave a clean `workspace.backend` seam for GNOME (workspaces are
 first-class on Ubuntu; likely a GNOME Shell extension or `gdbus` calls to `org.gnome.Shell`) and Hyprland/Sway
 (window rules `workspace X silent`), even if only KDE is built now.
 
-## Skills to end up with (suggested)
+## Skills to end up with (planned)
 
 - `setup` — write `browsers.json` interactively, create the agent desktop, install the window rule, verify with the poller.
 - `pick-browser` — choose a browser by task (local vs LAN vs VPS, login needed, egress), resolve the address.
@@ -87,10 +51,3 @@ first-class on Ubuntu; likely a GNOME Shell extension or `gdbus` calls to `org.g
 - `browser-login` / `captcha-handoff` / `browser-status` — ported, viewer URL from config.
 - `deconflict-desktop` — install/check/remove the rule + the jump fix; `status` runs the poller test.
 - `take-over` — let the user type into the agent browser temporarily (if candidate 1 is chosen).
-
-## House rules for this repo
-
-- Public. No owner names, emails, IPs, tailnet names, hostnames or account lists in commits. Use `192.0.2.x` /
-  `100.64.x.x` / `example.com` in docs.
-- Release tags `v0.<n>` until it works end to end, then `v1.0`, `v1.1`, … (owner's scheme: small tier `vMAJOR.N`).
-- Machine-facing output is JSON.

@@ -1,5 +1,11 @@
 # Claude-Agent-Browsers-Plugin — agent context
 
-Public Claude Code plugin. Start with `HANDOVER.md`. User-specific values only ever come from
-`~/.config/claude-agent-browsers/browsers.json`; never commit real hosts, IPs or accounts.
-Release tier: small (`v0.<n>` pre-release, then `v1.0`, `v1.1`, …).
+Public Claude Code plugin. Read `docs/design.md` (goal, sources, planned skills, desktop backends) and
+`docs/desktop-jump.md` (the open KDE desktop-jump bug, fix candidates, definition of done).
+
+House rules:
+- User-specific values only ever come from `~/.config/claude-agent-browsers/browsers.json`. No owner names,
+  emails, IPs, tailnet names, hostnames or account lists in commits; use `192.0.2.x` / `100.64.x.x` /
+  `example.com` in docs.
+- Machine-facing output is JSON.
+- Release tier: small (`v0.<n>` until it works end to end, then `v1.0`, `v1.1`, …).
