@@ -16,6 +16,9 @@ description: How to drive an agent browser through a Playwright-style MCP (navig
 
 ## Driving
 
+**Shared profiles** (lan/vps browsers the user also watches): check `browser_tabs` first and open a new tab rather
+than navigating one they have open. Never log out or clear site data: those sessions are theirs.
+
 1. `browser_navigate` → `browser_snapshot` → act by `ref` (`browser_click`, `browser_type`, `browser_fill_form`). Re-snapshot after anything that changes the page.
 2. Prefer the snapshot to screenshots. Take a screenshot only when the user wants to see something, or when layout matters.
 3. A local browser stays on the agent's desktop and never takes focus. **Don't switch the user's view yourself.** When
