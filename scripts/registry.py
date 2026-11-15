@@ -6,6 +6,7 @@
   registry.py get <id>             # one browser's full entry
   registry.py resolve [<id>]       # pick the first reachable address (lan, then tailnet, then public),
                                    # fill {address} in mcp_url / viewer_url. No id: the "default" browser.
+  registry.py check [<id>]         # resolve, then test the MCP and viewer ports on the chosen address
   registry.py workspace            # the workspace block (desktop_name, backend) with defaults applied
 
 Override the config path with CLAUDE_AGENT_BROWSERS_CONFIG.
@@ -90,9 +91,19 @@ def main(argv):
     if cmd == "resolve":
         r = resolve(find(cfg, argv[1] if len(argv) > 1 else None))
         out(r, 0 if r["ok"] else 1)
+    if cmd == "check":
+        b = find(cfg, argv[1] if len(argv) > 1 else None)
+        r = resolve(b)
+        if b.get("type") != "local" and r.get("address"):
+            for k in ("mcp_url", "viewer_url"):
+                if r.get(k):
+                    u = urlparse(r[k]); port = u.port or (443 if u.scheme == "https" else 80)
+                    r[k.replace("_url", "_reachable")] = reachable(u.hostname, port)
+            r["ok"] = all(r.get(k, True) for k in ("mcp_reachable", "viewer_reachable"))
+        out(r, 0 if r["ok"] else 1)
     if cmd == "workspace":
         out({**WS_DEFAULTS, **cfg.get("workspace", {})})
-    out({"ok": False, "error": f"unknown command {cmd!r}", "usage": __doc__.strip().splitlines()[2:8]}, 2)
+    out({"ok": False, "error": f"unknown command {cmd!r}", "usage": __doc__.strip().splitlines()[2:9]}, 2)
 
 
 if __name__ == "__main__":

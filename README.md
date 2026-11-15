@@ -19,13 +19,16 @@ A Claude Code plugin that gives Claude its own browsers and keeps them out of yo
 | `drive-browser` | Snapshot → ref → act; reuses the open local browser instead of launching another, and closes everything it opened when done |
 | `show-me` | Asks before showing you the agent browser; on a yes switches your view to the agent desktop, and back afterwards |
 | `panel-current-desktop` | Sets the KDE panel's task manager to show only this desktop's windows, so the agent's browser doesn't appear there |
+| `browser-login` | Hands a sign-in to you (never types credentials) by the browser's login source, identity provider first, then confirms the session |
+| `captcha-handoff` | Tries a challenge once, otherwise hands it to you and carries on; never abandons the task over a CAPTCHA |
+| `browser-status` | Checks each browser's MCP, viewer and a real tool call; fixes by symptom |
 | `deconflict-desktop` | Installs, checks, removes and tests the KDE window rule; `takeover` lets you type into the agent browser |
 
 ## Scripts (all print JSON)
 
 | Script | Purpose |
 |---|---|
-| `scripts/registry.py` | `path`, `list`, `get <id>`, `resolve [<id>]`, `workspace` over your `browsers.json` |
+| `scripts/registry.py` | `path`, `list`, `get <id>`, `resolve [<id>]`, `check [<id>]` (MCP + viewer ports), `workspace` over your `browsers.json` |
 | `scripts/desktop.sh` | `current`, `ensure`, `show`, `back`: the desktop backend seam (KDE built; GNOME, Hyprland, Sway planned) |
 | `scripts/kde-browser-workspace.sh` | `install`, `status`, `remove`, `takeover on\|off`: the KWin rule (forced desktop, extreme focus-stealing prevention, never accepts focus) |
 | `scripts/kde-desktop-watch.sh N` | Watches for N seconds and reports any desktop switch, window creation and activation. This is the test for "did it jump?" |
