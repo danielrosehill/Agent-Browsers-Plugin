@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read the agent-browser registry (~/.config/claude-agent-browsers/browsers.json). Stdlib only. JSON out.
+"""Read the agent-browser registry (~/.config/agent-browsers/browsers.json). Stdlib only. JSON out.
 
   registry.py path                 # where the config is, and whether it exists
   registry.py list                 # every browser, summarised
@@ -9,13 +9,18 @@
   registry.py check [<id>]         # resolve, then test the MCP and viewer ports on the chosen address
   registry.py workspace            # the workspace block (desktop_name, backend) with defaults applied
 
-Override the config path with CLAUDE_AGENT_BROWSERS_CONFIG.
+Override the config path with AGENT_BROWSERS_CONFIG (old name CLAUDE_AGENT_BROWSERS_CONFIG still honoured).
+Falls back to ~/.config/claude-agent-browsers/ if the new directory does not exist.
 """
 import json, os, socket, sys
 from urllib.parse import urlparse
 
-CFG = os.environ.get("CLAUDE_AGENT_BROWSERS_CONFIG") or os.path.join(
-    os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config"), "claude-agent-browsers", "browsers.json")
+_base = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
+CFG = os.environ.get("AGENT_BROWSERS_CONFIG") or os.environ.get("CLAUDE_AGENT_BROWSERS_CONFIG") or os.path.join(_base, "agent-browsers", "browsers.json")
+if not os.path.exists(CFG):  # fallback: pre-0.5.0 directory name
+    _old = os.path.join(_base, "claude-agent-browsers", "browsers.json")
+    if os.path.exists(_old):
+        CFG = _old
 ORDER = ["lan", "tailnet", "public"]
 WS_DEFAULTS = {"desktop_name": "Claude", "backend": "kde"}
 

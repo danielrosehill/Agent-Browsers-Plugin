@@ -10,7 +10,7 @@ things together:
 1. **Agent browsers as a first-class, typed registry.** Each browser has a `type` — `local` (on this machine),
    `lan` (a server on the home network), `vps` (a remote host) — plus its addresses (LAN, tailnet, public), MCP
    endpoint, viewer URL, engine and login source. All of it is **user configuration**
-   (`~/.config/claude-agent-browsers/browsers.json`, shape in `config/browsers.example.json`). Nothing personal
+   (`~/.config/agent-browsers/browsers.json`, shape in `config/browsers.example.json`). Nothing personal
    goes in the repo. Skills pick a browser by purpose/type and reach it by the best address (LAN when on the LAN,
    else tailnet, else public).
 2. **Linux desktop deconfliction.** The agent's browser lives on the agent's own virtual desktop ("workspace") and

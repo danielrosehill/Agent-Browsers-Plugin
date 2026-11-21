@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Set up Claude Agent Browsers on this machine. Writes the user's browser registry (~/.config/claude-agent-browsers/browsers.json), creates the agent's virtual desktop and installs the window rule that keeps the local agent browser there, then checks it. Use on "set up agent browsers", "add a browser to the registry", "configure the agent browser", or when another skill reports "no config".
+description: Set up Agent Browsers on this machine. Writes the user's browser registry (~/.config/agent-browsers/browsers.json), creates the agent's virtual desktop and installs the window rule that keeps the local agent browser there, then checks it. Use on "set up agent browsers", "add a browser to the registry", "configure the agent browser", or when another skill reports "no config".
 ---
 
 # Set up agent browsers

@@ -1,9 +1,9 @@
 {
-  "name": "claude-agent-browsers",
-  "version": "0.4.0",
+  "name": "agent-browsers",
+  "version": "0.5.0",
   "description": "Give Claude its own browsers without it taking over your screen: a registry of agent browsers by type (local, LAN, VPS) with their addresses, MCP endpoints, viewers and login sources kept in your own config, plus Linux desktop deconfliction (the agent browser lives on its own virtual desktop and never pulls you over to it).",
   "author": { "name": "Daniel Rosehill", "url": "https://github.com/danielrosehill" },
-  "repository": "https://github.com/danielrosehill/Claude-Agent-Browsers-Plugin",
+  "repository": "https://github.com/danielrosehill/Agent-Browsers-Plugin",
   "license": "MIT",
   "keywords": ["browser", "playwright", "mcp", "agent-browser", "kde", "linux", "virtual-desktop", "tailscale"]
 }

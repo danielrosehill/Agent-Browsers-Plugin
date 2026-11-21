@@ -14,7 +14,7 @@ the user's secret manager; never write the password itself into the config).
 
 1. `$PLUGIN/scripts/xpra-viewers.sh install`: installs the Xpra client if missing (Debian/Ubuntu: the xpra.org apt
    repo, because some Ubuntu releases don't ship it; uses sudo), then copies the launcher script and `registry.py` to
-   `~/.local/share/claude-agent-browsers/bin/` (a stable path across plugin updates) and writes
+   `~/.local/share/agent-browsers/bin/` (a stable path across plugin updates) and writes
    `~/.local/share/applications/agent-browser-<id>.desktop` and an icon.
 2. Check: every viewer shows `installed` and `reachable` true. `reachable` false: off the network the address needs
    (usually the tailnet), or the browser host is down. Run `browser-status`.

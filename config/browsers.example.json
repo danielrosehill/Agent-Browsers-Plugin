@@ -1,5 +1,5 @@
 {
-  "$comment": "Copy to ~/.config/claude-agent-browsers/browsers.json and edit. Never commit the real file.",
+  "$comment": "Copy to ~/.config/agent-browsers/browsers.json and edit. Never commit the real file.",
   "default": "personal-server",
   "workspace": {
     "desktop_name": "Claude",

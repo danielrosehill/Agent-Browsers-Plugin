@@ -15,7 +15,7 @@ set -euo pipefail
 src=$(cd "$(dirname "$(readlink -f "$0")")" && pwd)
 DATA=${XDG_DATA_HOME:-$HOME/.local/share}
 APPS=$DATA/applications; ICONS=$DATA/icons/hicolor/scalable/apps
-LIB=$DATA/claude-agent-browsers/bin      # stable copy: the plugin's own path changes with each version
+LIB=$DATA/agent-browsers/bin      # stable copy: the plugin's own path changes with each version
 reg() { python3 "$src/registry.py" "$@"; }
 
 viewers() {   # id<TAB>launcher<TAB>title<TAB>color<TAB>letter for every xpra viewer

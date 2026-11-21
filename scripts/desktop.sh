@@ -16,7 +16,7 @@ import json, sys
 try: w = json.loads(sys.argv[1]); w = w if "backend" in w else {}
 except ValueError: w = {}
 print(w.get("backend", "kde"), w.get("desktop_name", "Claude"), sep="\t")' "$ws")
-state=${XDG_RUNTIME_DIR:-/tmp}/claude-agent-browsers; mkdir -p "$state"
+state=${XDG_RUNTIME_DIR:-/tmp}/agent-browsers; mkdir -p "$state"
 cmd=${1:-current}
 
 die() { printf '{"ok":false,"backend":"%s","error":"%s"}\n' "$backend" "$1"; exit "${2:-1}"; }
