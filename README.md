@@ -23,6 +23,7 @@ A Claude Code plugin that gives Claude its own browsers and keeps them out of yo
 | `captcha-handoff` | Tries a challenge once, otherwise hands it to you and carries on; never abandons the task over a CAPTCHA |
 | `browser-status` | Checks each browser's MCP, viewer and a real tool call; fixes by symptom |
 | `install-viewers` | Desktop launchers that open remote (LAN/VPS) agent browsers as native windows over Xpra |
+| `page-to-pdf` | Saves a web page (receipt, order confirmation) as a clean PDF with headless Chrome, optionally just one element; checks the render and files it |
 | `deconflict-desktop` | Installs, checks, removes and tests the KDE window rule; `takeover` lets you type into the agent browser |
 
 ## Scripts (all print JSON)
@@ -36,6 +37,7 @@ A Claude Code plugin that gives Claude its own browsers and keeps them out of yo
 | `scripts/kde-panel-current-desktop.sh` | `status`, `on`, `off`: task manager "only current desktop" on every panel, applied live |
 | `scripts/xpra-viewers.sh` | `install`, `status`, `launch <id>`, `uninstall`: Xpra viewer launchers from `browsers.json` |
 | `scripts/local-browsers.sh` | Lists Playwright-managed browsers running on this machine, with age and owning MCP; `kill <pid>` for leftovers |
+| `scripts/page-to-pdf.py` | `URL OUT.pdf [--select CSS] [--hide CSS] [--browser chrome\|chromium]`: headless PDF render, JSON with pages and sha256 (uv inline deps) |
 | `test/launch-cycle.cjs` | Headed Playwright Firefox launch / navigate / new tab / close, twice, to test the rule without an MCP |
 
 Requirements: Linux, KDE Plasma 6 (`qdbus6`, `kwriteconfig6`, `kreadconfig6`) for the desktop parts, Python 3, a Playwright MCP server for each browser.
